@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.myapplication.adapter.MessageAdapter;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.example.myapplication.model.Message;
 import com.example.myapplication.utils.SharedPreferenceClass;
 import com.google.android.material.textfield.TextInputEditText;
@@ -69,7 +70,7 @@ public class StudentChatFragment extends Fragment {
         messageAdapter = new MessageAdapter(getContext(), messageList, studentId, role);
         recyclerView.setAdapter(messageAdapter);
         try {
-            mSocket = IO.socket("http://192.168.1.7:8000");
+            mSocket = IO.socket(ApiEndPoint.SOCKET_URL);
             mSocket.connect();
             mSocket.on(Socket.EVENT_CONNECT, onConnect);
             mSocket.on("newMessage", onNewMessage);

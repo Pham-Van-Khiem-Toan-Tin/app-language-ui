@@ -21,6 +21,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.example.myapplication.model.Vocabulary;
 import com.example.myapplication.utils.SharedPreferenceClass;
 
@@ -82,7 +83,7 @@ public class ListeningFragment extends Fragment {
     }
 
     private void translateWord(String text) {
-        String apiKey = "http://192.168.1.7:8000/api/translate";
+        String apiKey = ApiEndPoint.TRANSLATE;
         HashMap<String, String> params = new HashMap<>();
         params.put("text", text);
         params.put("from", "de");
@@ -119,7 +120,7 @@ public class ListeningFragment extends Fragment {
     }
 
     private void downloadAndPlayAudio() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.7:8000/" + mp3Path,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, ApiEndPoint.URL + mp3Path,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

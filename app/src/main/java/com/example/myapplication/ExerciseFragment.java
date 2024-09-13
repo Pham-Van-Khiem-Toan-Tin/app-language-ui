@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.adapter.ExerciserApdater;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.example.myapplication.model.Exercise;
 import com.example.myapplication.utils.SharedPreferenceClass;
 import com.google.gson.Gson;
@@ -72,7 +73,7 @@ public class ExerciseFragment extends Fragment {
         return view;
     }
     private void fetchData() {
-        String apiKey = "http://192.168.1.7:8000/api/exercise/all";
+        String apiKey = ApiEndPoint.EXERCISE_ALL;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, apiKey, null,
                 new Response.Listener<JSONObject>() {
                     @Override

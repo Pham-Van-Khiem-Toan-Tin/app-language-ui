@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.example.myapplication.model.Grammar;
 import com.example.myapplication.utils.SharedPreferenceClass;
 
@@ -94,7 +95,7 @@ public class GrammarDetailFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                completeGramar(grammarList.get(currentIndex).getId());
+                completeGrammar(grammarList.get(currentIndex).getId());
                 if (currentIndex < grammarList.size() - 1) {
                     currentIndex++;
                     displayGrammar(currentIndex);
@@ -116,8 +117,8 @@ public class GrammarDetailFragment extends Fragment {
         descriptionText.setText(Html.fromHtml(currentGrammar.getDescription(), Html.FROM_HTML_MODE_LEGACY));
         scrollView.scrollTo(0,0);
     }
-    private void completeGramar(String id) {
-        String apiKey = "http://192.168.1.7:8000/api/grammar/complete";
+    private void completeGrammar(String id) {
+        String apiKey = ApiEndPoint.GRAMMAR_COMPLETE;
         JSONObject requestBody = new JSONObject();
         try {
             requestBody.put("grammarId", id); // Thay đổi theo dữ liệu của bạn

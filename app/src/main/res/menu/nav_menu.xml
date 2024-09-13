@@ -10,6 +10,11 @@
             android:icon="@drawable/nav_home"
             android:title="Trang chủ" />
         <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/search"
+            android:title="Tra cứu từ"
+            />
+        <item
             android:id="@+id/nav_vocabulary"
             android:icon="@drawable/vocabulary"
             android:title="Từ vựng" />

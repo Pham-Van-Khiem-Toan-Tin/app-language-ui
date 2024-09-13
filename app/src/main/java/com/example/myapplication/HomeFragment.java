@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.example.myapplication.utils.SharedPreferenceClass;
 
 import org.json.JSONException;
@@ -40,7 +41,7 @@ public class HomeFragment extends Fragment {
         vocabularyProgress = view.findViewById(R.id.vocabulary_progress);
         grammarProgress = view.findViewById(R.id.grammar_progress);
         exerciseProgress = view.findViewById(R.id.exercise_progress);
-        String apiKey = "http://192.168.1.7:8000/api/statistical";
+        String apiKey = ApiEndPoint.STATISTICAL;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, apiKey, null,
                 new Response.Listener<JSONObject>() {
                     @Override

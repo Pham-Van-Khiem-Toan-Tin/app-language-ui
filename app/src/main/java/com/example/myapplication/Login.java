@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.example.myapplication.utils.SharedPreferenceClass;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -34,7 +35,7 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity {
     TextInputEditText emailEdit, passwordEdit;
-    Button btnReg, btnLogin;
+    Button btnReg, btnLogin, btnForgot;
     ProgressBar progressBar;
     SharedPreferenceClass sharedPreferenceClass;
     @Override
@@ -60,7 +61,16 @@ public class Login extends AppCompatActivity {
         passwordEdit = findViewById(R.id.password);
         btnReg = findViewById(R.id.register);
         btnLogin = findViewById(R.id.login);
+        btnForgot = findViewById(R.id.forgot);
         sharedPreferenceClass = new SharedPreferenceClass(this);
+        btnForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ForgotPassword.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,7 +93,7 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, "Enter password", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                String apiKey = "http://192.168.1.7:8000/api/login";
+                String apiKey = ApiEndPoint.LOGIN;
                 RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
                 final HashMap<String, String> params = new HashMap<>();
                 params.put("email", email);

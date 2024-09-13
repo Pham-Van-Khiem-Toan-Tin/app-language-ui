@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.example.myapplication.model.Topic;
 import com.example.myapplication.model.Vocabulary;
 import com.example.myapplication.utils.SharedPreferenceClass;
@@ -102,7 +103,7 @@ public class TopicDetailFragment extends Fragment implements QuestionTopicFragme
     }
 
     private void fetchTopicDetailData(String topicId) {
-        String apiKey = "http://192.168.1.7:8000/api/vocabulary/topic/" + topicId;
+        String apiKey = ApiEndPoint.VOCABULARY_TOPIC + topicId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, apiKey, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -163,7 +164,7 @@ public class TopicDetailFragment extends Fragment implements QuestionTopicFragme
     private void completeWord(String topicId, String wordId, boolean completeResult) {
         if (completeResult) {
 
-            String apiKey = "http://192.168.1.7:8000/api/vocabulary/topic/complete";
+            String apiKey = ApiEndPoint.VOCABULARY_TOPIC_COMPLETE;
             JSONObject requestBody = new JSONObject();
 
             try {

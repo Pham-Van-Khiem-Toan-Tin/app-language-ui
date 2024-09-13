@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.example.myapplication.model.Exercise;
 import com.example.myapplication.model.Question;
 import com.example.myapplication.utils.SharedPreferenceClass;
@@ -101,7 +102,7 @@ public class ExerciseDetailFragment extends Fragment implements ExerciseQuestion
         transaction.commit();
     }
     private void completaExercise(String exerciseId, boolean completed, float score) {
-        String apiKey = "http://192.168.1.7:8000/api/exercise/complete";
+        String apiKey = ApiEndPoint.EXERCISE_COMPLETE;
         JSONObject requestBody = new JSONObject();
         try {
             requestBody.put("exerciseId", exerciseId);

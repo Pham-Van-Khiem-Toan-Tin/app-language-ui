@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.adapter.ChatAvailableAdapter;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.example.myapplication.model.ChatAvailable;
 import com.example.myapplication.model.Message;
 import com.example.myapplication.utils.SharedPreferenceClass;
@@ -70,7 +71,7 @@ public class TeacherChatFragment extends Fragment {
         });
         try {
             teacherId = sharedPreferenceClass.getValue_string("id");
-            mSocket = IO.socket("http://192.168.1.7:8000");
+            mSocket = IO.socket(ApiEndPoint.SOCKET_URL);
             mSocket.connect();
             mSocket.on(Socket.EVENT_CONNECT, onConnect);
             mSocket.emit("roomAvailable", teacherId);

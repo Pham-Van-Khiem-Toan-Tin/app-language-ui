@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.adapter.GrammarAdapter;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.example.myapplication.model.Grammar;
 import com.example.myapplication.utils.SharedPreferenceClass;
 
@@ -62,7 +63,7 @@ public class GrammarFragment extends Fragment {
     }
 
     private void fetchGrammarData() {
-        String apiKey = "http://192.168.1.7:8000/api/grammar/all"; // Thay đổi URL theo API của bạn
+        String apiKey = ApiEndPoint.GRAMMAR_ALL; // Thay đổi URL theo API của bạn
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, apiKey, null, new Response.Listener<JSONObject>() {

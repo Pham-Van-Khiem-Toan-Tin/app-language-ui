@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.myapplication.adapter.MessageAdapter;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.example.myapplication.model.ChatAvailable;
 import com.example.myapplication.model.Message;
 import com.example.myapplication.utils.SharedPreferenceClass;
@@ -71,7 +72,7 @@ public class TeacherMessageFragment extends Fragment {
         messageAdapter = new MessageAdapter(getContext(), messageList, teacherId, role);
         recyclerView.setAdapter(messageAdapter);
         try {
-            mSocket = IO.socket("http://192.168.1.7:8000");
+            mSocket = IO.socket(ApiEndPoint.SOCKET_URL);
             mSocket.connect();
             mSocket.on(io.socket.client.Socket.EVENT_CONNECT, onConnect);
             mSocket.on("newMessage", onNewMessage);

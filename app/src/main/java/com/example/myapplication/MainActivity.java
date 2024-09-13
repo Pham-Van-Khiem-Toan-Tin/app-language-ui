@@ -127,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.nav_home) {
             selectedFragment = new HomeFragment();
+        }else if (id == R.id.nav_search) {
+            selectedFragment = new SearchFragment();
         } else if (id == R.id.nav_vocabulary) {
             selectedFragment = new VocabularyFragment();
         } else if (id == R.id.nav_grammar) {
@@ -135,7 +137,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             selectedFragment = new ExerciseFragment();
         } else if (id == R.id.nav_help) {
             selectedFragment = new StudentChatFragment();
-        } else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_teacher_help) {
+            selectedFragment = new TeacherChatFragment();
+        }else if (id == R.id.nav_logout) {
             sharedPreferenceClass.clear();
             Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);

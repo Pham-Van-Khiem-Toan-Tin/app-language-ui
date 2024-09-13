@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONObject;
@@ -72,7 +73,7 @@ public class Register extends AppCompatActivity {
                 email = String.valueOf(emailEdit.getText());
                 password = String.valueOf(passwordEdit.getText());
                 confirmPass = String.valueOf(confirmPassEdit.getText());
-                String apiKey = "http://192.168.1.7:8000/api/register";
+                String apiKey = ApiEndPoint.REGISTER;
                 if (TextUtils.isEmpty(confirmPass)) {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(Register.this, "Enter user name", Toast.LENGTH_SHORT).show();

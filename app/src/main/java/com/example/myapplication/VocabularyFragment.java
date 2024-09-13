@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.adapter.TopicAdapter;
+import com.example.myapplication.apis.ApiEndPoint;
 import com.example.myapplication.model.Topic;
 import com.example.myapplication.utils.SharedPreferenceClass;
 
@@ -76,7 +77,7 @@ public class VocabularyFragment extends Fragment {
     }
 
     private void fetchTopicData() {
-        String apiKey = "http://192.168.1.7:8000/api/vocabulary/all"; // Thay đổi URL theo API của bạn
+        String apiKey = ApiEndPoint.VOCABULARY_ALL; // Thay đổi URL theo API của bạn
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, apiKey, null,
                 new Response.Listener<JSONObject>() {
                     @Override
