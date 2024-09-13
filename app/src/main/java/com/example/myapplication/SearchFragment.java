@@ -127,8 +127,7 @@ public class SearchFragment extends Fragment {
         });
         return view;
     }
-    private void translateText(String text) {
-        String apiKey = ApiEndPoint.TRANSLATE;
+    private void translateText(String text) {String apiKey = ApiEndPoint.TRANSLATE;
         HashMap<String, String> params = new HashMap<>();
         params.put("text",text);
         params.put("from", from);

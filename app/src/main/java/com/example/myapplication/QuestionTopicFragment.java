@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.myapplication.model.Question;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class QuestionTopicFragment extends Fragment {
@@ -60,9 +61,10 @@ public class QuestionTopicFragment extends Fragment {
 
         // Lặp qua các options và thêm RadioButton động
         List<String> options = question.getOptions();
-        for (int i = 0; i < options.size(); i++) {
+        List<String> optionsSort = options.stream().sorted().collect(Collectors.toList());
+        for (int i = 0; i < optionsSort.size(); i++) {
             RadioButton radioButton = new RadioButton(getContext());
-            radioButton.setText(options.get(i));
+            radioButton.setText(optionsSort.get(i));
             radioButton.setId(View.generateViewId());
             radioGroup.addView(radioButton);
         }

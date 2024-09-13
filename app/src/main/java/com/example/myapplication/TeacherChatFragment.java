@@ -56,9 +56,10 @@ public class TeacherChatFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_teacher_chat, container, false);
         sharedPreferenceClass = new SharedPreferenceClass(getContext());
-        chatAvailableAdapter = new ChatAvailableAdapter(getContext(),chatAvailableList);
+        chatAvailableAdapter = new ChatAvailableAdapter(getContext(), chatAvailableList);
         recyclerView = view.findViewById(R.id.chat_available);
         recyclerView.setAdapter(chatAvailableAdapter);
+        teacherId = sharedPreferenceClass.getValue_string("id");
         chatAvailableAdapter.setOnItemClickListener(new ChatAvailableAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(ChatAvailable chatAvailable, int position) {
@@ -70,7 +71,6 @@ public class TeacherChatFragment extends Fragment {
             }
         });
         try {
-            teacherId = sharedPreferenceClass.getValue_string("id");
             mSocket = IO.socket(ApiEndPoint.SOCKET_URL);
             mSocket.connect();
             mSocket.on(Socket.EVENT_CONNECT, onConnect);
@@ -82,6 +82,7 @@ public class TeacherChatFragment extends Fragment {
         }
         return view;
     }
+
     private Emitter.Listener onConnect = args -> getActivity().runOnUiThread(() -> {
 
         Log.d("connnect", ": success");
@@ -117,6 +118,7 @@ public class TeacherChatFragment extends Fragment {
             e.printStackTrace();
         }
     });
+
     @Override
     public void onDestroy() {
         super.onDestroy();
