@@ -3,62 +3,122 @@ package com.example.myapplication;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TeacherChatFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.myapplication.adapter.ChatAvailableAdapter;
+import com.example.myapplication.model.ChatAvailable;
+import com.example.myapplication.model.Message;
+import com.example.myapplication.utils.SharedPreferenceClass;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
+
+
 public class TeacherChatFragment extends Fragment {
+    private Socket mSocket;
+    SharedPreferenceClass sharedPreferenceClass;
+    RecyclerView recyclerView;
+    List<ChatAvailable> chatAvailableList = new ArrayList<>();
+    ChatAvailableAdapter chatAvailableAdapter;
+    String teacherId;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public TeacherChatFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TeacherChatFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TeacherChatFragment newInstance(String param1, String param2) {
+    public static TeacherChatFragment newInstance() {
         TeacherChatFragment fragment = new TeacherChatFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_teacher_chat, container, false);
+        View view = inflater.inflate(R.layout.fragment_teacher_chat, container, false);
+        sharedPreferenceClass = new SharedPreferenceClass(getContext());
+        chatAvailableAdapter = new ChatAvailableAdapter(getContext(),chatAvailableList);
+        recyclerView = view.findViewById(R.id.chat_available);
+        recyclerView.setAdapter(chatAvailableAdapter);
+        chatAvailableAdapter.setOnItemClickListener(new ChatAvailableAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(ChatAvailable chatAvailable, int position) {
+                Fragment fragment = TeacherMessageFragment.newInstance(chatAvailable);
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+        try {
+            teacherId = sharedPreferenceClass.getValue_string("id");
+            mSocket = IO.socket("http://192.168.1.7:8000");
+            mSocket.connect();
+            mSocket.on(Socket.EVENT_CONNECT, onConnect);
+            mSocket.emit("roomAvailable", teacherId);
+            mSocket.on("roomAvailable", roomAvailable);
+            mSocket.on("reloadRoomAvailable", reloadRoomAvilable);
+        } catch (URISyntaxException exception) {
+            exception.printStackTrace();
+        }
+        return view;
+    }
+    private Emitter.Listener onConnect = args -> getActivity().runOnUiThread(() -> {
+
+        Log.d("connnect", ": success");
+    });
+    private Emitter.Listener reloadRoomAvilable = args -> getActivity().runOnUiThread(() -> {
+
+        mSocket.emit("roomAvailable", teacherId);
+
+    });
+    private Emitter.Listener roomAvailable = args -> getActivity().runOnUiThread(() -> {
+        JSONObject data = (JSONObject) args[0];
+        try {
+            JSONArray jsonArray = data.getJSONArray("rooms");
+            List<ChatAvailable> dataList = new ArrayList<>();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject item = jsonArray.getJSONObject(i);
+                ChatAvailable chatAvailable = new ChatAvailable();
+                chatAvailable.setRoomId(item.getString("_id"));
+                chatAvailable.setMessage(item.getString("lastMessage"));
+                chatAvailable.setStudentName(item.getString("studentName"));
+                chatAvailable.setStudentId(item.getString("studentId"));
+                Date timestamp = formatter.parse(item.getString("timestamp"));
+                chatAvailable.setCreatedAt(timestamp);
+                dataList.add(chatAvailable);
+            }
+            chatAvailableList.clear();
+            chatAvailableList.addAll(dataList);
+            chatAvailableAdapter.notifyDataSetChanged();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    });
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mSocket.disconnect();
     }
 }

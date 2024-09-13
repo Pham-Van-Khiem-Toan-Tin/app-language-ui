@@ -18,11 +18,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder> {
     private List<Message> messages;
     private String currentUserId;
     Context context;
+    String role;
 
-    public MessageAdapter( Context context,List<Message> messages, String currentUserId) {
+    public MessageAdapter( Context context,List<Message> messages, String currentUserId, String role) {
         this.messages = messages;
         this.currentUserId = currentUserId;
         this.context = context;
+        this.role = role;
     }
 
     @NonNull
@@ -34,7 +36,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         Message message = messages.get(position);
-        if (message.getStudentId().equals(currentUserId)) {
+        String idCompare = message.getSendId();
+        if (idCompare.equals(currentUserId)) {
             // Người gửi
             holder.sentMessageContainer.setVisibility(View.VISIBLE);
             holder.receivedMessageContainer.setVisibility(View.GONE);

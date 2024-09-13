@@ -76,7 +76,7 @@ public class ListeningFragment extends Fragment {
 
         requestQueue = Volley.newRequestQueue(getContext());
         sharedPreferenceClass = new SharedPreferenceClass(getContext());
-        Vocabulary vocabulary = (Vocabulary) getArguments().getSerializable(ARG_VOCABULARY, Vocabulary.class);
+        Vocabulary vocabulary = (Vocabulary) getArguments().getSerializable(ARG_VOCABULARY);
         translateWord(vocabulary.getWord());
         return view;
     }

@@ -53,7 +53,7 @@ public class QuestionTopicFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_question_topic, container, false);
-        Question question = (Question) getArguments().getSerializable(ARG_QUESTION, Question.class);
+        Question question = (Question) getArguments().getSerializable(ARG_QUESTION);
         questionText = view.findViewById(R.id.tv_question);
         questionText.setText(question.getQuestion());
         RadioGroup radioGroup = view.findViewById(R.id.rg_options);

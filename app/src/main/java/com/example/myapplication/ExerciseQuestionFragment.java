@@ -55,7 +55,7 @@ public class ExerciseQuestionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_exercise_question, container, false);
-        Question question = getArguments().getSerializable(ARG_QUESTION, Question.class);
+        Question question = (Question) getArguments().getSerializable(ARG_QUESTION);
         questionViewText = view.findViewById(R.id.tv_question);
         questionViewText.setText(question.getQuestion());
         RadioGroup radioGroup = view.findViewById(R.id.rg_options);

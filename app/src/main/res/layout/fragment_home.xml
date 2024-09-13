@@ -8,90 +8,123 @@
     android:paddingVertical="40dp"
     tools:context=".HomeFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@drawable/rounded_corners"
         android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_corners"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:padding="16dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/home_vocabulary" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Từ vựng"
-            android:textSize="25sp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:padding="8dp"
-            android:layout_centerVertical="true"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"/>
+            android:text="Từ vựng"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/vocabulary_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0%"
-            android:layout_centerVertical="true"
-            android:textSize="20sp"
             android:padding="8dp"
-            android:textStyle="bold"
+            android:text="0%"
             android:textColor="@android:color/white"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
-    <RelativeLayout
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@drawable/rounded_corners"
+
         android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_corners"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:padding="16dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/home_grammar" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ngữ pháp"
-            android:textSize="25sp"
+            android:layout_weight="1"
             android:padding="8dp"
-            android:layout_centerVertical="true"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"/>
+            android:text="Ngữ pháp"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/grammar_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0%"
-            android:layout_centerVertical="true"
-            android:textSize="20sp"
             android:padding="8dp"
-            android:textStyle="bold"
+            android:text="0%"
             android:textColor="@android:color/white"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
-    <RelativeLayout
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@drawable/rounded_corners"
         android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_corners"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:padding="16dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/home_vocabulary" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bài tập"
-            android:textSize="25sp"
+            android:layout_weight="1"
             android:padding="8dp"
-            android:layout_centerVertical="true"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"/>
+            android:text="Bài tập"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/exercise_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0%"
-            android:layout_centerVertical="true"
-            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
             android:padding="8dp"
-            android:textStyle="bold"
+
+            android:text="0%"
             android:textColor="@android:color/white"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
 </LinearLayout>

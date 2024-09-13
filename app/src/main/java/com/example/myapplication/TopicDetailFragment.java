@@ -87,10 +87,8 @@ public class TopicDetailFragment extends Fragment implements QuestionTopicFragme
                             currentIndexQuestion++;
                             navigateToQuestionFragment(vocabulary);
                         } else {
-                            if (questionAnswer.stream().allMatch((question) -> question)) {
-                                completeWord(topicList.get(currentIndexTopic).getId(), vocabularyList.get(currentIndexWord).get_id());
-                            }
-
+                            boolean completeResult = questionAnswer.stream().allMatch((question) -> question);
+                            completeWord(topicList.get(currentIndexTopic).getId(), vocabularyList.get(currentIndexWord).get_id(), completeResult);
                         }
                     }
                 }
@@ -162,47 +160,55 @@ public class TopicDetailFragment extends Fragment implements QuestionTopicFragme
         btnNext.setEnabled(this.isAnswerSelected);
         questionAnswer.add(result);
     }
-    private void completeWord(String topicId, String wordId) {
-        String apiKey = "http://192.168.1.7:8000/api/vocabulary/topic/complete" ;
-        JSONObject requestBody = new JSONObject();
+    private void completeWord(String topicId, String wordId, boolean completeResult) {
+        if (completeResult) {
 
-        try {
-            requestBody.put("topicId", topicId);
-            requestBody.put("wordId", wordId);
-            requestBody.put("learned", true);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, apiKey, requestBody,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            String message = response.getString("message");
-                            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                            currentIndexQuestion = 0;
-                            currentIndexWord++;
-                            navigateToListeningFragment(vocabularyList.get(currentIndexWord));
-                            questionAnswer.clear();
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
+            String apiKey = "http://192.168.1.7:8000/api/vocabulary/topic/complete";
+            JSONObject requestBody = new JSONObject();
+
+            try {
+                requestBody.put("topicId", topicId);
+                requestBody.put("wordId", wordId);
+                requestBody.put("learned", true);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, apiKey, requestBody,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String message = response.getString("message");
+                                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                                currentIndexQuestion = 0;
+                                currentIndexWord++;
+                                navigateToListeningFragment(vocabularyList.get(currentIndexWord));
+                                questionAnswer.clear();
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(getContext(), "Không thể hoàn thành học từ mới", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json");
-                headers.put("Authorization", "Bearer " + sharedPreferenceClass.getValue_string("token"));
-                return headers;
-            }
-        };
-        requestQueue.add(jsonObjectRequest);
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    Toast.makeText(getContext(), "Không thể hoàn thành học từ mới", Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "Bearer " + sharedPreferenceClass.getValue_string("token"));
+                    return headers;
+                }
+            };
+            requestQueue.add(jsonObjectRequest);
+        } else {
+            currentIndexQuestion = 0;
+            currentIndexWord++;
+            navigateToListeningFragment(vocabularyList.get(currentIndexWord));
+            questionAnswer.clear();
+        }
     }
 }

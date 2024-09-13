@@ -10,6 +10,15 @@ public class Message {
     String teacherId;
     String message;
     Date timestamp;
+    String sendId;
+
+    public String getSendId() {
+        return sendId;
+    }
+
+    public void setSendId(String sendId) {
+        this.sendId = sendId;
+    }
 
     public String get_id() {
         return _id;
