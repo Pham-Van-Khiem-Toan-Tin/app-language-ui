@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.apis.ApiEndPoint;
+import com.example.myapplication.image.ImageEnum;
 import com.example.myapplication.model.Vocabulary;
 import com.example.myapplication.utils.SharedPreferenceClass;
 
@@ -41,7 +42,7 @@ public class ListeningFragment extends Fragment {
 
     TextView textViewFrom, textViewTo;
     String mp3Path;
-    ImageView btnSpeak;
+    ImageView btnSpeak, imageViewVocabulary;
     MediaPlayer mediaPlayer;
     File audioFile;
     private static final String ARG_VOCABULARY = "vocabulary";
@@ -66,7 +67,7 @@ public class ListeningFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_listening, container, false);
         textViewFrom = view.findViewById(R.id.word_from);
         textViewTo = view.findViewById(R.id.word_to);
-
+        imageViewVocabulary = view.findViewById(R.id.vocabulary_image);
         btnSpeak = view.findViewById(R.id.btn_speak);
         btnSpeak.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +96,9 @@ public class ListeningFragment extends Fragment {
                         try {
                             textViewFrom.setText(response.getString("text"));
                             textViewTo.setText(response.getString("translatedText"));
+                            String imageFileName = convertToDrawableName(response.getString("text"));
+                            int imageId = ImageEnum.getImageResourceId(imageFileName);
+                            imageViewVocabulary.setImageResource(imageId);
                             mp3Path = response.getString("mp3Url");
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -118,7 +122,12 @@ public class ListeningFragment extends Fragment {
         };
         requestQueue.add(jsonObjectRequest);
     }
-
+    private String convertToDrawableName(String vocabulary) {
+        vocabulary = vocabulary.toLowerCase();
+        vocabulary = vocabulary.replace("ü", "u");
+        vocabulary = vocabulary.replace(" ", "_");
+        return vocabulary;
+    }
     private void downloadAndPlayAudio() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, ApiEndPoint.URL + mp3Path,
                 new Response.Listener<String>() {

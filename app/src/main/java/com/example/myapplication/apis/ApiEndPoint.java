@@ -1,7 +1,7 @@
 package com.example.myapplication.apis;
 
 public class ApiEndPoint {
-    public static final String SOCKET_URL = "http://192.168.1.7:8000";
+    public static final String SOCKET_URL = "http://192.168.101.4:8000";
     public static final String URL = SOCKET_URL + "/";
     public static final String BASE_URL = SOCKET_URL + "/api/";
     public static final String LOGIN = BASE_URL + "login";

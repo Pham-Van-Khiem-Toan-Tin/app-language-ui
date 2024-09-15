@@ -6,6 +6,11 @@
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".ListeningFragment">
+    <ImageView
+        android:id="@+id/vocabulary_image"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
